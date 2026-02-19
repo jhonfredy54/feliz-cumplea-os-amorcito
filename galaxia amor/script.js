@@ -284,14 +284,18 @@ renderer.setSize(window.innerWidth,window.innerHeight);
 
 
 // ==========================
-// 🎵 MÚSICA - ADORE (FIX MÓVIL)
+// 🎵 MÚSICA FIX DEFINITIVO ANDROID + iOS
 // ==========================
 
-const audio = new Audio("adore.mp3");
-audio.loop = true;
-audio.volume = 0;
+let audio;
 
 function iniciarMusica() {
+
+    if (!audio) {
+        audio = new Audio("adore.mp3");
+        audio.loop = true;
+        audio.volume = 0;
+    }
 
     audio.play().then(() => {
 
@@ -304,15 +308,12 @@ function iniciarMusica() {
         }, 200);
 
     }).catch(err => {
-        console.log("El navegador bloqueó el audio:", err);
+        console.log("Error al reproducir:", err);
     });
 
-    window.removeEventListener("touchstart", iniciarMusica);
-    window.removeEventListener("click", iniciarMusica);
+    document.body.removeEventListener("touchstart", iniciarMusica);
+    document.body.removeEventListener("click", iniciarMusica);
 }
 
-// Para celular
-window.addEventListener("touchstart", iniciarMusica);
-
-// Para PC
-window.addEventListener("click", iniciarMusica);
+document.body.addEventListener("touchstart", iniciarMusica);
+document.body.addEventListener("click", iniciarMusica);
